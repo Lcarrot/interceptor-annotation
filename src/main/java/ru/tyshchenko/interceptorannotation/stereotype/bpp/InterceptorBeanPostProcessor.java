@@ -26,8 +26,8 @@ public class InterceptorBeanPostProcessor implements BeanPostProcessor {
   @Override
   public Object postProcessBeforeInitialization(Object bean, String beanName)
       throws BeansException {
-    if (bean instanceof HandlerInterceptor) {
-      Interceptor annotation = bean.getClass().getAnnotation(Interceptor.class);
+    Interceptor annotation = bean.getClass().getAnnotation(Interceptor.class);
+    if (annotation != null && bean instanceof HandlerInterceptor) {
       InvocationHandler handler = new InvocationHandlerHandlerInterceptor(annotation.pathPatterns(),
           annotation.excludePathPatterns(), (HandlerInterceptor) bean
       );
